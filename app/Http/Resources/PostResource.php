@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Http\Resources;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class PostResource extends JsonResource
+{
+
+    public function toArray(Request $request): array
+    {
+        return [
+            'id' => $this->id,
+            'title' => $this->title ?? null,
+            'content' => $this->content ?? null,
+            "image" => $this->getImage(),
+            'created_at' => convertCreatedAt($this->created_at ?? null),
+            'user' => new UserResource($this->whenLoaded('user')),
+            "platforms" => PlatformResource::collection($this->whenLoaded('platforms')),
+        ];
+    }
+}
