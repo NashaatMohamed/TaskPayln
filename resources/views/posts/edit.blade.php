@@ -1,0 +1,30 @@
+@extends('layouts.app')
+@section('content')
+    <h1 class="mb-4">Edit Post</h1>
+    <form action="{{ route('posts.update', $post) }}" method="POST" enctype="multipart/form-data">
+        @csrf @method('PUT')
+        <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input type="text" name="title" class="form-control" value="{{ $post->title }}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Content</label>
+            <textarea name="content" class="form-control" rows="4" required>{{ $post->content }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Select Platforms</label>
+            <select name="platforms[]" class="form-select" multiple required>
+                @foreach($platforms as $platform)
+                    <option value="{{ $platform->id }}" @selected(in_array($platform->id, $post->platforms->pluck('id')->toArray()))>
+                        {{ $platform->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Schedule Time</label>
+            <input type="datetime-local" name="scheduled_time" class="form-control" value="{{ $post->scheduled_time->format('Y-m-d\TH:i') }}" required>
+        </div>
+        <button class="btn btn-success">Update Post</button>
+    </form>
+@endsection

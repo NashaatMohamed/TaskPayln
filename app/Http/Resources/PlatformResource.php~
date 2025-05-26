@@ -16,7 +16,6 @@ class PlatformResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name ?? null,
             "type" => EnumFactory::getName(enumClass: PlatformTypeEnum::class, value: $this->type ?? null),
-            "is_active" => $this->getActiveStatus()->label()
         ];
     }
 }

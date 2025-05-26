@@ -50,12 +50,9 @@ class PostService
             ? PostStatusEnum::SCHEDULED->value
             : $post->status;
 
-        return tap($post, function ($post) use ($data) {
-            $post->update($data);
-            $post->storeImages(media: $data['image'] ?? null, update: true);
-            $post->platforms()?->sync($data['platforms'] ?? []);
-        });
-
+        return tap($post)->update($data)
+            ->storeImages(media: $data['image'] ?? null, update: true)
+            ->platforms()?->sync($data['platforms'] ?? []);
     }
 
     public function delete(Post $post): void

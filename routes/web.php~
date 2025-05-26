@@ -5,6 +5,4 @@ use App\Http\Controllers\Blade\PostController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-Route::group(["middleware" => "auth"], function () {
-    Route::resource("posts", PostController::class);
-});
+Route::resource("posts", PostController::class);

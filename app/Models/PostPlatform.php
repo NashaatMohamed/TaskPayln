@@ -13,6 +13,7 @@ class PostPlatform extends Model
     protected $fillable = [
         'post_id',
         'platform_id',
+        "platform_type"
     ];
 
     public function post():BelongsTo

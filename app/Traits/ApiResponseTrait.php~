@@ -29,7 +29,7 @@ trait ApiResponseTrait
         ], $code);
     }
 
-    public function getValidationErrors($validator, $code = 422): \Illuminate\Http\JsonResponse
+    public function getvalidationErrors($validator, $code = 422): \Illuminate\Http\JsonResponse
     {
         return $this->errorResponse($validator->errors()->first(), $code);
     }

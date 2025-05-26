@@ -4,7 +4,7 @@ namespace App\Jobs;
 
 use App\Enum\PostStatusEnum;
 use App\Models\Post;
-use App\Models\PostPlatform;
+use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Foundation\Queue\Queueable;
@@ -28,14 +28,12 @@ class ProcessScheduledJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $postIds = Post::query()->whereDate('scheduled_time', '<=', now())->pluck('id');
-
-        if ($postIds->isNotEmpty()) {
-            PostPlatform::query()->whereIn('post_id', $postIds)
-                ->update(['platform_type' => PostStatusEnum::PUBLISHED->value]);
-
-            Post::query()->whereIn('id', $postIds)
-                ->update(['status' => PostStatusEnum::PUBLISHED->value]);
+        $posts = Post::query()->whereDate('scheduled_time', "<=", Carbon::now())->get();
+        foreach ($posts as $post) {
+            $post->platforms()->updateExistingPivot($post->id, ['status' => PostStatusEnum::PUBLISHED->value]);
+            $post->update([
+                'status' => PostStatusEnum::PUBLISHED->value
+            ]);
         }
     }
 }

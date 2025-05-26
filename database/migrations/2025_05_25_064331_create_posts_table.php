@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('content');
             $table->foreignId("user_id")->nullable()->constrained()->nullOnDelete();
             $table->string("scheduled_time")->nullable();
-            $table->tinyInteger("status")->default(1)->comment("1=draft, 2=published, 3=scheduled");
+            $table->tinyInteger("status")->default(1)->comment("1=draft, 2=published, 3=scheduled , 4=failed");
             $table->timestamps();
         });
     }
