@@ -38,15 +38,16 @@ class PostService
 
         $data['status'] = isset($data['scheduled_time']) && $data['scheduled_time'] != null ? PostStatusEnum::SCHEDULED->value : PostStatusEnum::DRAFT->value;
         $post = Post::query()->create($data + ['user_id' => $user->id]);
-        $post->storeImages(media: $data['image'] ?? null);
+
         $post->platforms()->sync($data['platforms']);
+        $post->storeImages(media: $data['image'] ?? null);
 
         return $post;
     }
 
-    public function update(Post $post, array $data): BaseModel
+    public function update(Post $post, array $data)
     {
-        $data['scheduled_time'] = $post->scheduled_time ?? now();
+        $data['scheduled_time'] = $data['scheduled_time'] ??  $post->scheduled_time ?? now();
         $data['status'] = $post->status === PostStatusEnum::DRAFT->value
             ? PostStatusEnum::SCHEDULED->value
             : $post->status;

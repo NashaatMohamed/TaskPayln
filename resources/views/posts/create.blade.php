@@ -37,7 +37,7 @@
         </div>
         <div class="mb-3">
             <label for="scheduled_time" class="form-label">Schedule Time</label>
-            <input type="datetime-local" name="scheduled_time" class="form-control" required>
+            <input type="datetime-local" name="scheduled_time" class="form-control">
         </div>
         <button class="btn btn-primary">create post</button>
     </form>
