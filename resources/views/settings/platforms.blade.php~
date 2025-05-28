@@ -19,7 +19,7 @@
             <tbody>
             @foreach($platforms as $index => $platform)
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $index + 1 }}</td>
 
                     <td>
                         <input type="hidden" name="platforms[{{ $index }}][id]" value="{{ $platform->id }}">

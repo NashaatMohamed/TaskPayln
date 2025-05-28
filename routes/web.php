@@ -1,10 +1,28 @@
 <?php
 
+use App\Http\Controllers\Blade\ActivityLogController;
+use App\Http\Controllers\Blade\AnalyticsController;
+use App\Http\Controllers\Blade\AuthController;
 use App\Http\Controllers\Blade\DashboardController;
 use App\Http\Controllers\Blade\PostController;
+use App\Http\Controllers\Blade\SettingsController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+
+
+
 Route::group(["middleware" => "auth"], function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get("get_posts", [PostController::class, "index"])->name("get_posts");
     Route::resource("posts", PostController::class);
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/settings/platforms', [SettingsController::class, 'platforms'])->name('settings.platforms');
+    Route::PUT('/settings/platforms', [SettingsController::class, 'updatePlatforms'])->name('settings.platforms.update');
+    Route::get("analytics", [AnalyticsController::class, "index"])->name("analytics");
+    Route::get('/activity-logs', [ActivityLogController::class, 'index'])->name('activity-logs.index');
+
+
 });

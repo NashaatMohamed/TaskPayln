@@ -21,6 +21,16 @@ class PostController extends Controller
 
     public function index(Request $request): JsonResponse
     {
+        $postIds = Post::query()->whereDate('scheduled_time', '<=', now())->pluck('id');
+
+        if ($postIds->isNotEmpty()) {
+            PostPlatform::query()->whereIn('post_id', $postIds)
+                ->update(['platform_type' => PostStatusEnum::PUBLISHED->value]);
+
+            Post::query()->whereIn('id', $postIds)
+                ->update(['status' => PostStatusEnum::PUBLISHED->value]);
+        }
+        dd("ddd");
         $posts = $this->postService->index(request: $request);
         return $this->dataResponse(msg: 'the posts fetched successfully', data: PostResource::collection($posts));
     }

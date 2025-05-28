@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Blade;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {

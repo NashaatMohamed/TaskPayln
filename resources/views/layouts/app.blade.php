@@ -15,16 +15,13 @@
         <ul class="navbar-nav ms-auto">
             <li class="nav-item"><a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('posts.create') }}">New Post</a></li>
-{{--            <li class="nav-item"><a class="nav-link" href="{{ route('settings.platforms') }}">Settings</a></li>--}}
-{{--            <li class="nav-item">--}}
-{{--                <form action="{{ route('logout') }}" method="POST" class="d-inline">@csrf <button class="btn btn-link nav-link" type="submit">Logout</button></form>--}}
-{{--            </li> --}}
-
-{{--            <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>--}}
-{{--            <li class="nav-item"><a class="nav-link" href="#">New Post</a></li>--}}
-            <li class="nav-item"><a class="nav-link" href="#">Settings</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('settings.platforms') }}">Settings</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('analytics') }}">Analytics</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('activity-logs.index') }}">Logs</a></li>
             <li class="nav-item">
-                <form action="#" method="POST" class="d-inline">@csrf <button class="btn btn-link nav-link" type="submit">Logout</button></form>
+                <form action="{{ route('logout') }}" method="POST" class="d-inline">@csrf
+                    <button class="btn btn-link nav-link" type="submit">Logout</button>
+                </form>
             </li>
         </ul>
     </div>

@@ -1,6 +1,17 @@
 @extends('layouts.app')
 @section('content')
     <h1 class="mb-4">Create New Post</h1>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <strong>Whoops!</strong> Please fix the following errors:
+            <ul class="mb-0 mt-2">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
@@ -28,7 +39,7 @@
             <label for="scheduled_time" class="form-label">Schedule Time</label>
             <input type="datetime-local" name="scheduled_time" class="form-control" required>
         </div>
-        <button class="btn btn-primary">Schedule Post</button>
+        <button class="btn btn-primary">create post</button>
     </form>
 @endsection
 @push('scripts')

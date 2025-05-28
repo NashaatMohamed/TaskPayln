@@ -20,7 +20,6 @@ class Platform extends BaseModel
         return $query->where('is_active', ActiveEnum::ACTIVE->value);
     }
 
-
     public function posts():BelongsToMany
     {
         return $this->belongsToMany(Post::class, 'post_platforms', 'platform_id', 'post_id');

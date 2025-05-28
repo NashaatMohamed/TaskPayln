@@ -23,7 +23,8 @@
         </div>
         <div class="mb-3">
             <label class="form-label">Schedule Time</label>
-            <input type="datetime-local" name="scheduled_time" class="form-control" value="{{ $post->scheduled_time->format('Y-m-d\TH:i') }}" required>
+            <input type="datetime-local" name="scheduled_time" class="form-control"
+                   value="{{filled($post->scheduled_time) ? \Carbon\Carbon::parse($post->scheduled_time)->format('Y-m-d\TH:i') : null }}" required>
         </div>
         <button class="btn btn-success">Update Post</button>
     </form>

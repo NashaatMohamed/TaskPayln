@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Http\Controllers\Blade;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Platforms\updatePlatformRequest;
+use App\Models\Platform;
+
+class SettingsController extends Controller
+{
+
+    public function platforms()
+    {
+        $platforms = Platform::query()->get();
+        return view('settings.platforms', get_defined_vars());
+    }
+
+    public function updatePlatforms(updatePlatformRequest $request)
+    {
+        $data = $request->all();
+        foreach ($data['platforms'] as $platformData) {
+            Platform::query()->where('id', $platformData['id'])->update([
+                'name' => $platformData['name'],
+                'type' => $platformData['type'],
+                'is_active' => $platformData['is_active'],
+            ]);
+        }
+
+        return to_route("settings.platforms")->with('success', 'Platforms updated successfully');
+    }
+}

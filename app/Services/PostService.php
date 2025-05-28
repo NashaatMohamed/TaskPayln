@@ -36,8 +36,9 @@ class PostService
         $dailyLimit = $user->posts()->whereDate('created_at', today())->count();
         abort_if($dailyLimit >= 10, 400, 'You have reached your daily limit of 10 posts.');
 
+        $data['status'] = isset($data['scheduled_time']) && $data['scheduled_time'] != null ? PostStatusEnum::SCHEDULED->value : PostStatusEnum::DRAFT->value;
         $post = Post::query()->create($data + ['user_id' => $user->id]);
-        $post->storeImages(media: $data['image']);
+        $post->storeImages(media: $data['image'] ?? null);
         $post->platforms()->sync($data['platforms']);
 
         return $post;
